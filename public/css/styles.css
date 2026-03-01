@@ -753,3 +753,39 @@ section {
     white-space: nowrap;
     border-width: 0;
 }
+
+/* ==================== EXPORT BUTTON ==================== */
+.export-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: transparent;
+    border: 1px solid var(--primary-color);
+    color: var(--primary-color);
+    padding: 0.45rem 0.6rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+.export-btn i {
+    color: var(--primary-color);
+}
+
+.export-btn:hover {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+/* Utility to hide UI temporarily during capture */
+.temp-hidden { display: none !important; }
+
+/* ==================== PRINT / PDF RULES ==================== */
+@media print {
+    body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    header, .menu-btn, .nav-right, .export-btn { display: none !important; }
+    .experience-item, .education-item, .skill-category { page-break-inside: avoid; }
+    .section-title { page-break-after: avoid; }
+    main { margin-top: 0; }
+}

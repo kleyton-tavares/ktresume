@@ -115,7 +115,8 @@ const contentData = {
         'footer-updated': 'Última atualização: Fevereiro de 2026',
         'footer-linkedin': 'LinkedIn',
         'footer-email': 'Email',
-        'footer-phone': 'Telefone'
+        'footer-phone': 'Telefone',
+        'export-pdf': 'Exportar PDF'
     },
     
     en: {
@@ -233,7 +234,8 @@ const contentData = {
         'footer-updated': 'Last updated: February 2026',
         'footer-linkedin': 'LinkedIn',
         'footer-email': 'Email',
-        'footer-phone': 'Phone'
+        'footer-phone': 'Phone',
+        'export-pdf': 'Download PDF'
     },
     
     es: {
@@ -352,6 +354,9 @@ const contentData = {
         'footer-linkedin': 'LinkedIn',
         'footer-email': 'Correo Electrónico',
         'footer-phone': 'Teléfono'
+        ,
+        // Export
+        'export-pdf': 'Descargar PDF'
     }
 };
 
@@ -431,3 +436,218 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         }
     });
 });
+
+// ==================== EXPORTAR PDF ====================
+// Ensure html2pdf/html2canvas/jsPDF are available (load dynamically if needed)
+async function loadHtml2Pdf() {
+    const loaders = [];
+    if (!window.html2canvas) {
+        loaders.push(new Promise((resolve, reject) => {
+            const s = document.createElement('script');
+            s.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+            s.async = true;
+            s.onload = () => {
+                console.log('html2canvas loaded');
+                resolve();
+            };
+            s.onerror = () => {
+                console.warn('Could not load remote html2canvas, trying local fallback');
+                const local = document.createElement('script');
+                local.src = 'js/html2canvas.min.js';
+                local.async = true;
+                local.onload = () => {
+                    console.log('local html2canvas loaded');
+                    resolve();
+                };
+                local.onerror = () => reject(new Error('Failed to load html2canvas (remote+local)'));
+                document.body.appendChild(local);
+            };
+            document.body.appendChild(s);
+        }));
+    }
+    if (!window.jspdf && !window.jsPDF) {
+        loaders.push(new Promise((resolve, reject) => {
+            const s = document.createElement('script');
+            s.src = 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
+            s.async = true;
+            s.onload = () => {
+                // jspdf.umd exposes window.jspdf and/or window.jsPDF
+                console.log('jsPDF loaded initial', window.jspdf, window.jsPDF);
+                if (window.jspdf && !window.jsPDF) {
+                    window.jsPDF = window.jspdf.jsPDF || window.jspdf;
+                    console.log('aliased jsPDF to', window.jsPDF);
+                }
+                resolve();
+            };
+            s.onerror = () => {
+                console.warn('Could not load remote jsPDF, trying local fallback');
+                const local = document.createElement('script');
+                local.src = 'js/jspdf.umd.min.js';
+                local.async = true;
+                local.onload = () => {
+                    console.log('local jsPDF loaded', window.jspdf, window.jsPDF);
+                    if (window.jspdf && !window.jsPDF) {
+                        window.jsPDF = window.jspdf.jsPDF || window.jspdf;
+                    }
+                    resolve();
+                };
+                local.onerror = () => reject(new Error('Failed to load jsPDF (remote+local)'));
+                document.body.appendChild(local);
+            };
+            document.body.appendChild(s);
+        }));
+    }
+    if (!window.html2pdf) {
+        loaders.push(new Promise((resolve, reject) => {
+            const s = document.createElement('script');
+            s.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js';
+            s.async = true;
+            s.onload = () => resolve();
+            s.onerror = () => {
+                console.warn('Could not load remote html2pdf, trying local fallback');
+                const local = document.createElement('script');
+                local.src = 'js/html2pdf.bundle.min.js';
+                local.async = true;
+                local.onload = () => resolve();
+                local.onerror = () => reject(new Error('Failed to load html2pdf.js (remote+local)'));
+                document.body.appendChild(local);
+            };
+            document.body.appendChild(s);
+        }));
+    }
+    return Promise.all(loaders);
+}
+
+async function exportPDF() {
+    const element = document.getElementById('cv-content');
+    if (!element) {
+        alert('Área do currículo não encontrada (id="cv-content").');
+        return;
+    }
+
+    const langMap = { pt: 'PT', en: 'EN', es: 'ES' };
+    const langCode = (currentLanguage && langMap[currentLanguage]) ? langMap[currentLanguage] : 'PT';
+    const filename = `CV_Kleyton_Tavares_${langCode}.pdf`;
+
+    console.log('Starting PDF generation', { filename, lang: currentLanguage, html2pdf: !!window.html2pdf });
+
+    // Ensure libraries are loaded (always attempt, since html2pdf may not export jsPDF)
+    try {
+        await loadHtml2Pdf();
+        console.log('libraries load attempt finished', JSON.stringify({
+            html2canvas: !!window.html2canvas,
+            jsPDF: !!window.jsPDF,
+            jspdfObj: !!window.jspdf,
+            html2pdf: !!window.html2pdf
+        }));
+    } catch (err) {
+        console.error('loadHtml2Pdf failed', err);
+        alert('Não foi possível carregar as bibliotecas de geração de PDF. Verifique sua conexão e tente novamente.');
+        return;
+    }
+    // alias jsPDF if only jspdf object present
+    if (!window.jsPDF && window.jspdf) {
+        window.jsPDF = window.jspdf.jsPDF || window.jspdf;
+        console.log('post-load alias applied, jsPDF now', !!window.jsPDF);
+    }
+
+    // Temporarily hide UI elements that should not appear in the PDF
+    const hideSelectors = ['header', '.menu-btn', '.nav-menu', '.export-btn'];
+    const hiddenEls = [];
+    hideSelectors.forEach(sel => {
+        document.querySelectorAll(sel).forEach(el => {
+            el.classList.add('temp-hidden');
+            hiddenEls.push(el);
+        });
+    });
+
+    const restoreUI = () => {
+        hiddenEls.forEach(el => el.classList.remove('temp-hidden'));
+    };
+
+    // Safety timeout to restore UI if something hangs
+    const timeout = setTimeout(() => {
+        console.warn('PDF generation timeout — restoring UI');
+        restoreUI();
+        alert('Tempo esgotado na geração do PDF. Tente novamente.');
+    }, 30000);
+
+    try {
+        // sanity checks
+        if (typeof html2canvas !== 'function') {
+            throw new Error('html2canvas não disponível');
+        }
+        if (typeof jsPDF !== 'function') {
+            throw new Error('jsPDF não disponível');
+        }
+
+        // use html2canvas + jsPDF to generate instead of html2pdf wrapper
+        let canvas = await html2canvas(element, { scale: 2, useCORS: true, letterRendering: true, logging: true });
+        if (!canvas) throw new Error('html2canvas retornou null');
+        console.log('canvas dimensions', canvas.width, canvas.height);
+        if (canvas.width === 0 || canvas.height === 0) {
+            console.warn('canvas empty, trying clone fallback');
+            const clone = element.cloneNode(true);
+            clone.style.visibility = 'visible';
+            clone.style.position = 'absolute';
+            clone.style.left = '0';
+            clone.style.top = '0';
+            clone.style.width = element.scrollWidth + 'px';
+            clone.style.height = element.scrollHeight + 'px';
+            document.body.appendChild(clone);
+            canvas = await html2canvas(clone, { scale: 2, useCORS: true, letterRendering: true, logging: true });
+            document.body.removeChild(clone);
+            console.log('clone canvas dimensions', canvas.width, canvas.height);
+            if (canvas.width === 0 || canvas.height === 0) throw new Error('clone canvas also zero');
+        }
+
+        const imgData = canvas.toDataURL('image/jpeg', 0.98);
+        // jsPDF may be defined under window.jsPDF or window.jspdf.jsPDF after UMD load
+        let PdfConstructor = window.jsPDF || (window.jspdf && window.jspdf.jsPDF);
+        if (!PdfConstructor && window.html2pdf) {
+            // html2pdf bundle might export jsPDF as a property
+            try {
+                const h = window.html2pdf();
+                if (h && h.jsPDF) PdfConstructor = h.jsPDF;
+            } catch (_) {}
+        }
+        if (!PdfConstructor) throw new Error('jsPDF constructor not found');
+        const pdf = new PdfConstructor('p', 'pt', 'a4');
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const pdfHeight = pdf.internal.pageSize.getHeight();
+        const imgWidth = canvas.width;
+        const imgHeight = canvas.height;
+        const ratio = imgWidth / pdfWidth;
+        const imgPdfHeight = imgHeight / ratio;
+
+        let position = 0;
+        pdf.addImage(imgData, 'JPEG', 0, position, pdfWidth, imgPdfHeight);
+        position -= pdfHeight;
+        while (Math.abs(position) < imgPdfHeight) {
+            pdf.addPage();
+            pdf.addImage(imgData, 'JPEG', 0, position, pdfWidth, imgPdfHeight);
+            position -= pdfHeight;
+        }
+        // store arraybuffer for debugging/tests
+        try {
+            window.lastPdfArray = pdf.output('arraybuffer');
+        } catch (e) {
+            console.warn('could not capture pdf output:', e);
+        }
+        pdf.save(filename);
+        finished = true;
+    } catch (err) {
+        const msg = err && err.message ? err.message : String(err);
+        console.error('Error generating PDF:', msg, err.stack || '');
+        alert('Erro ao gerar PDF: ' + msg);
+    } finally {
+        clearTimeout(timeout);
+        restoreUI();
+    }
+}
+
+// Hook export button
+const exportBtn = document.getElementById('exportBtn');
+if (exportBtn) {
+    exportBtn.addEventListener('click', exportPDF);
+}

@@ -43,6 +43,10 @@
                     <button class="lang-btn" data-lang="en" data-i18n="lang-en">EN</button>
                     <button class="lang-btn" data-lang="es" data-i18n="lang-es">ES</button>
                 </div>
+                <button id="exportBtn" class="export-btn" title="Exportar PDF">
+                    <i class="fas fa-file-pdf"></i>
+                    <span data-i18n="export-pdf">Exportar PDF</span>
+                </button>
                 <button class="menu-btn" id="menuBtn">
                     <i class="fas fa-bars"></i>
                 </button>
@@ -51,7 +55,7 @@
     </header>
 
     <!-- ==================== MAIN CONTENT ==================== -->
-    <main>
+    <main id="cv-content">
         <!-- HERO SECTION -->
         <section class="hero" id="home">
             <div class="hero-avatar">
@@ -507,6 +511,10 @@
         </div>
     </footer>
 
+    <!-- Bibliotecas para exportar PDF (fallbacks automáticos em script.js) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
     <!-- Arquivo JavaScript externo -->
     <script src="js/script.js"></script>
 </body>
