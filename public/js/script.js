@@ -26,7 +26,7 @@ const contentData = {
         'section-additional': 'Informações Adicionais',
         
         // Sobre
-        'about-content': 'Profissional com mais de 12 anos de experiência em arquitetura de sistemas, desenvolvimento full-stack e transformação digital. Especialista em SAP com expertise em ABAP, SAPUI5, SAP BTP e CAP, com foco em soluções escaláveis e inovadoras. Domínio comprovado em desenvolvimento multiplataforma (web, mobile e desktop), análise de dados e implementação de estratégias tecnológicas em ambientes corporativos de grande porte. Combinando excelentes soft skills com habilidades técnicas avançadas, entreguei soluções que impulsionaram a eficiência operacional e agregaram valor significativo aos negócios.',
+        'about-content': 'Profissional com mais de 12 anos de experiência em arquitetura de sistemas, desenvolvimento full-stack e transformação digital. Especialista em SAP com expertise em ABAP, SAPUI5, SAP MII, SAP ME, SAP DM, SAP BTP e CAP, com foco em soluções escaláveis e inovadoras. Domínio comprovado em desenvolvimento multiplataforma (web, mobile e desktop), análise de dados e implementação de estratégias tecnológicas em ambientes corporativos de grande porte. Combinando excelentes soft skills com habilidades técnicas avançadas, entreguei soluções que impulsionaram a eficiência operacional e agregaram valor significativo aos negócios.',
         
         // Educação
         'edu-backend-title': 'Backend Developer - SAP CAP',
@@ -60,7 +60,8 @@ const contentData = {
         // Experiência
         'exp-systema-pos': 'Consultor SAPUI5 / Arquiteto de Soluções',
         'exp-systema-comp': 'SYSTEMA',
-        'exp-systema-desc': 'Liderança técnica em projetos SAP de grande porte. Desenvolvimento e arquitetura de soluções utilizando SAPUI5, SAP MII, SAP BTP e SAP CAP. Consultoria estratégica para transformação digital e otimização de processos.',
+        'exp-systema-desc': 'Liderança técnica em projetos SAP de grande porte. Desenvolvimento e arquitetura de soluções utilizando SAPUI5, SAP MII, SAP ME, SAP DM, SAP BTP e SAP CAP. Consultoria estratégica para transformação digital e otimização de processos.',
+        'exp-systema-tools': ['SAPUI5','SAP MII','SAP ME','SAP DM','SAP BTP','SAP CAP','SAP PCo'],
         
         'exp-interface-pos': 'Consultor SAPUI5 / Desenvolvedor Full Stack',
         'exp-interface-comp': 'INTERFACE',
@@ -98,6 +99,8 @@ const contentData = {
         'skill-web': 'Web',
         'skill-desktop': 'Desktop',
         'skill-mobile': 'Mobile',
+        // Lista de skills SAP (usada para renderizar badges dinâmicos)
+        'skills-sap': ['SAP CAP','SAP BTP','SAP UI5','SAP MII','SAP ME','SAP DM','SAP PCo','ABAP'],
         
         // Informações Adicionais
         'section-additional': 'Informações Adicionais',
@@ -144,7 +147,7 @@ const contentData = {
         'section-additional': 'Additional Information',
         
         // About
-        'about-content': 'Professional with over 12 years of experience in systems architecture, full-stack development, and digital transformation. SAP specialist with expertise in ABAP, SAPUI5, SAP BTP, and CAP, focusing on scalable and innovative solutions. Proven proficiency in multiplatform development (web, mobile, and desktop), data analysis, and implementation of technological strategies in large corporate environments. Combining excellent soft skills with advanced technical expertise, I have delivered solutions that drove operational efficiency and added significant business value.',
+        'about-content': 'Professional with over 12 years of experience in systems architecture, full-stack development, and digital transformation. SAP specialist with expertise in ABAP, SAPUI5, SAP MII, SAP ME, SAP DM, SAP BTP, and CAP, focusing on scalable and innovative solutions. Proven proficiency in multiplatform development (web, mobile, and desktop), data analysis, and implementation of technological strategies in large corporate environments. Combining excellent soft skills with advanced technical expertise, I have delivered solutions that drove operational efficiency and added significant business value.',
         
         // Education
         'edu-backend-title': 'Backend Developer - SAP CAP',
@@ -178,7 +181,8 @@ const contentData = {
         // Experience
         'exp-systema-pos': 'SAPUI5 Consultant / Solutions Architect',
         'exp-systema-comp': 'SYSTEMA',
-        'exp-systema-desc': 'Technical leadership on large-scale SAP projects. Development and architecture of solutions using SAPUI5, SAP MII, SAP BTP, and SAP CAP. Strategic consulting for digital transformation and process optimization.',
+        'exp-systema-desc': 'Technical leadership on large-scale SAP projects. Development and architecture of solutions using SAPUI5, SAP MII, SAP ME, SAP DM, SAP BTP, and SAP CAP. Strategic consulting for digital transformation and process optimization.',
+        'exp-systema-tools': ['SAPUI5','SAP MII','SAP ME','SAP DM','SAP BTP','SAP CAP','SAP PCo'],
         
         'exp-interface-pos': 'SAPUI5 Consultant / Full Stack Developer',
         'exp-interface-comp': 'INTERFACE',
@@ -216,6 +220,8 @@ const contentData = {
         'skill-web': 'Web',
         'skill-desktop': 'Desktop',
         'skill-mobile': 'Mobile',
+        // SAP skills list (rendered as badges)
+        'skills-sap': ['SAP CAP','SAP BTP','SAP UI5','SAP MII','SAP ME','SAP DM','SAP PCo','ABAP'],
         
         // Additional Info
         'section-additional': 'Additional Information',
@@ -262,7 +268,7 @@ const contentData = {
         'section-additional': 'Información Adicional',
         
         // Acerca de
-        'about-content': 'Profesional con más de 12 años de experiencia en arquitectura de sistemas, desarrollo full-stack y transformación digital. Especialista en SAP con experiencia en ABAP, SAPUI5, SAP BTP y CAP, enfocado en soluciones escalables e innovadoras. Dominio comprobado en desarrollo multiplataforma (web, móvil y escritorio), análisis de datos e implementación de estrategias tecnológicas en grandes ambientes corporativos. Combinando excelentes habilidades blandas con experiencia técnica avanzada, he entregado soluciones que impulsaron la eficiencia operacional y agregaron valor significativo a los negocios.',
+        'about-content': 'Profesional con más de 12 años de experiencia en arquitectura de sistemas, desarrollo full-stack y transformación digital. Especialista en SAP con experiencia en ABAP, SAPUI5, SAP MII, SAP ME, SAP DM, SAP BTP y CAP, enfocado en soluciones escalables e innovadoras. Dominio comprobado en desarrollo multiplataforma (web, móvil y escritorio), análisis de datos e implementación de estrategias tecnológicas en grandes ambientes corporativos. Combinando excelentes habilidades blandas con experiencia técnica avanzada, he entregado soluciones que impulsaron la eficiencia operacional y agregaron valor significativo a los negocios.',
         
         // Educación
         'edu-backend-title': 'Desarrollador Backend - SAP CAP',
@@ -296,7 +302,8 @@ const contentData = {
         // Experiencia
         'exp-systema-pos': 'Consultor SAPUI5 / Arquitecto de Soluciones',
         'exp-systema-comp': 'SYSTEMA',
-        'exp-systema-desc': 'Liderazgo técnico en proyectos SAP de gran escala. Desarrollo y arquitectura de soluciones utilizando SAPUI5, SAP MII, SAP BTP y SAP CAP. Consultoría estratégica para transformación digital y optimización de procesos.',
+        'exp-systema-desc': 'Liderazgo técnico en proyectos SAP de gran escala. Desarrollo y arquitectura de soluciones utilizando SAPUI5, SAP MII, SAP ME, SAP DM, SAP BTP y SAP CAP. Consultoría estratégica para transformación digital y optimización de procesos.',
+            'exp-systema-tools': ['SAPUI5','SAP MII','SAP ME','SAP DM','SAP BTP','SAP CAP','SAP PCo'],
         
         'exp-interface-pos': 'Consultor SAPUI5 / Desarrollador Full Stack',
         'exp-interface-comp': 'INTERFACE',
@@ -334,6 +341,8 @@ const contentData = {
         'skill-web': 'Web',
         'skill-desktop': 'Escritorio',
         'skill-mobile': 'Móvil',
+            // Lista de skills SAP (usada para badges)
+            'skills-sap': ['SAP CAP','SAP BTP','SAP UI5','SAP MII','SAP ME','SAP DM','SAP PCo','ABAP'],
         
         // Información Adicional
         'section-additional': 'Información Adicional',
@@ -366,13 +375,26 @@ function updateLanguage(lang) {
     // Atualizar texto i18n
     document.querySelectorAll('[data-i18n]').forEach(element => {
         const key = element.dataset.i18n;
-        if (contentData[lang] && contentData[lang][key]) {
-            if (element.tagName === 'INPUT' || element.tagName === 'BUTTON' ||
-                element.tagName === 'TEXTAREA') {
-                element.value = contentData[lang][key];
-                element.textContent = contentData[lang][key];
+        const value = contentData[lang] && contentData[lang][key];
+        if (value !== undefined && value !== null) {
+            // Se o valor for um array, renderizar badges/spans
+            if (Array.isArray(value)) {
+                if (element.classList.contains('skill-tags')) {
+                    element.innerHTML = value.map(v => `<span class="skill-badge">${v}</span>`).join('\n');
+                } else if (element.classList.contains('experience-tools')) {
+                    element.innerHTML = value.map(v => `<span class="tool-tag">${v}</span>`).join('\n');
+                } else {
+                    // fallback: listar como texto separado por vírgulas
+                    element.textContent = value.join(', ');
+                }
             } else {
-                element.textContent = contentData[lang][key];
+                if (element.tagName === 'INPUT' || element.tagName === 'BUTTON' ||
+                    element.tagName === 'TEXTAREA') {
+                    element.value = value;
+                    element.textContent = value;
+                } else {
+                    element.textContent = value;
+                }
             }
         }
     });
